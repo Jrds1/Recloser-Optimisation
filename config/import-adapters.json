@@ -1,0 +1,156 @@
+[
+  {
+    "category": "GIS",
+    "platform": "Esri ArcGIS Pro / Enterprise",
+    "formats": "SHP, FileGDB, GeoJSON, REST Feature Service",
+    "status": "Planned",
+    "purpose": "Spatial network, assets, poles, spans, boundaries and coordinate systems"
+  },
+  {
+    "category": "GIS",
+    "platform": "QGIS / GDAL workflows",
+    "formats": "GPKG, GeoJSON, SHP, QGS/QGZ references",
+    "status": "Planned",
+    "purpose": "Open GIS exchange and edited feeder layers"
+  },
+  {
+    "category": "GIS",
+    "platform": "AutoCAD Map / Civil 3D",
+    "formats": "DXF, DWG via conversion, CSV",
+    "status": "Planned",
+    "purpose": "CAD feeder drawings and construction geometry"
+  },
+  {
+    "category": "GIS",
+    "platform": "MapInfo Pro",
+    "formats": "TAB, MIF/MID, CSV",
+    "status": "Planned",
+    "purpose": "Legacy utility mapping layers"
+  },
+  {
+    "category": "GIS",
+    "platform": "Google Earth / field mapping",
+    "formats": "KML, KMZ, CSV",
+    "status": "Planned",
+    "purpose": "Field notes, route sketches and rough spatial overlays"
+  },
+  {
+    "category": "GIS",
+    "platform": "PostGIS / spatial databases",
+    "formats": "Database connection, SQL dump, GeoPackage export",
+    "status": "Planned",
+    "purpose": "Enterprise geospatial datasets"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "DIgSILENT PowerFactory",
+    "formats": "DGS, XML, CSV, XLSX",
+    "status": "Planned",
+    "purpose": "Electrical topology, switches, protection devices and loads"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "ETAP",
+    "formats": "CSV, XLSX, XML, database export, DXF",
+    "status": "Planned",
+    "purpose": "Engineering network models and device attributes"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "CYME",
+    "formats": "MDB, CSV, XML, GIS export",
+    "status": "Planned",
+    "purpose": "Distribution feeder models and load data"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "Synergi Electric",
+    "formats": "MDB, CSV, XML, GIS export",
+    "status": "Planned",
+    "purpose": "Distribution model exchange and asset connectivity"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "PSS SINCAL / NEPLAN",
+    "formats": "CIM XML, CSV, XLSX",
+    "status": "Planned",
+    "purpose": "Planning model imports"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "OpenDSS",
+    "formats": "DSS, CSV",
+    "status": "Planned",
+    "purpose": "Open feeder models and validation test cases"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "GridLAB-D",
+    "formats": "GLM, CSV",
+    "status": "Planned",
+    "purpose": "Open distribution simulation models"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "pandapower / Python studies",
+    "formats": "JSON, XLSX, Pickle, CSV",
+    "status": "Planned",
+    "purpose": "Python-based network studies and interchange"
+  },
+  {
+    "category": "Electrical model",
+    "platform": "MATPOWER / MATLAB",
+    "formats": "M, MAT, CSV",
+    "status": "Planned",
+    "purpose": "Research model exchange and benchmark feeders"
+  },
+  {
+    "category": "Standards",
+    "platform": "IEC CIM / CGMES-style exchange",
+    "formats": "RDF, XML, JSON-LD",
+    "status": "Planned",
+    "purpose": "Common information model import for network assets and topology"
+  },
+  {
+    "category": "Protection settings",
+    "platform": "ASPEN OneLiner / CAPE-style protection studies",
+    "formats": "OLR, CSV, XML",
+    "status": "Planned",
+    "purpose": "Protection zones, device settings and coordination context"
+  },
+  {
+    "category": "Protection settings",
+    "platform": "Relay and disturbance files",
+    "formats": "RIO, XRIO, COMTRADE CFG/DAT, SEL exports, CSV",
+    "status": "Planned",
+    "purpose": "Recloser, relay and fault event metadata"
+  },
+  {
+    "category": "Operations",
+    "platform": "SCADA / ADMS / DMS",
+    "formats": "CSV, XLSX, JSON API, CIM XML",
+    "status": "Planned",
+    "purpose": "Switch states, device telemetry, feeder operating state and tags"
+  },
+  {
+    "category": "Operations",
+    "platform": "OMS outage systems",
+    "formats": "CSV, XLSX, JSON API",
+    "status": "Planned",
+    "purpose": "Outage history for SAIDI and SAIFI baseline studies"
+  },
+  {
+    "category": "Enterprise",
+    "platform": "SAP, Maximo or asset registry",
+    "formats": "CSV, XLSX, XML, JSON",
+    "status": "Planned",
+    "purpose": "Asset identifiers, install dates, ratings and maintenance metadata"
+  },
+  {
+    "category": "Enterprise",
+    "platform": "AMI / MDMS / customer systems",
+    "formats": "CSV, XLSX, JSON, Parquet export",
+    "status": "Planned",
+    "purpose": "Customer counts, load groupings and interruption weighting"
+  }
+]

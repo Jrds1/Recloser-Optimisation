@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>RecloserOptimisation</AssemblyName>
+    <RootNamespace>RecloserOptimisation.App</RootNamespace>
+    <ApplicationIcon>..\..\assets\icon.ico</ApplicationIcon>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\assets\icon.ico" Link="Assets\icon.ico" />
+    <Content Include="..\..\assets\logo.jpg" Link="Assets\logo.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\config\import-adapters.json" Link="Config\import-adapters.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
