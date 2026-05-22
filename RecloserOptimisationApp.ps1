@@ -100,7 +100,7 @@ $Xaml = @"
           </Border>
 
           <Button x:Name="NavDashboard" Content="Dashboard" Tag="Dashboard" Style="{StaticResource NavButtonStyle}" />
-          <Button x:Name="NavIngestion" Content="Ingestion" Tag="Ingestion" Style="{StaticResource NavButtonStyle}" />
+          <Button x:Name="NavStorage" Content="File Storage" Tag="Storage" Style="{StaticResource NavButtonStyle}" />
           <Button x:Name="NavProcessing" Content="Processing" Tag="Processing" Style="{StaticResource NavButtonStyle}" />
           <Button x:Name="NavModel" Content="Model Building" Tag="Model" Style="{StaticResource NavButtonStyle}" />
           <Button x:Name="NavMap" Content="Topology Map" Tag="Map" Style="{StaticResource NavButtonStyle}" />
@@ -213,7 +213,7 @@ $Xaml = @"
                   <Border Background="#F7F9FC" BorderBrush="#C8D3E3" BorderThickness="1" CornerRadius="8" Padding="22" Margin="0,14,0,0">
                     <StackPanel HorizontalAlignment="Center">
                       <TextBlock Text="Ready for source data" FontWeight="SemiBold" Foreground="#132033" TextAlignment="Center" />
-                      <TextBlock Text="Import utility exports first. Processing, validation and optimisation are reserved for the next build." Style="{StaticResource SmallMutedStyle}" TextAlignment="Center" Margin="0,6,0,0" />
+                      <TextBlock Text="Import utility exports first." Style="{StaticResource SmallMutedStyle}" TextAlignment="Center" Margin="0,6,0,0" />
                     </StackPanel>
                   </Border>
                 </StackPanel>
@@ -261,7 +261,7 @@ $Xaml = @"
           </StackPanel>
         </ScrollViewer>
 
-        <ScrollViewer x:Name="IngestionPage" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+        <ScrollViewer x:Name="StoragePage" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
           <StackPanel Margin="22">
             <Grid Margin="0,0,0,16">
               <Grid.ColumnDefinitions>
@@ -269,13 +269,8 @@ $Xaml = @"
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
               <StackPanel>
-                <TextBlock Text="Source staging" Style="{StaticResource SmallMutedStyle}" FontWeight="SemiBold" />
-                <TextBlock Text="Import utility, electrical modelling and GIS exports" Style="{StaticResource PageHeadingStyle}" />
-              </StackPanel>
-              <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Button x:Name="ChooseFilesButton" Content="Import Files" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" IsEnabled="False" />
-                <Button x:Name="ChooseFolderButton" Content="Import Folder" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0" IsEnabled="False" />
-                <Button x:Name="ClearImportsButton" Content="Clear Staged" Style="{StaticResource SecondaryButtonStyle}" IsEnabled="False" />
+                <TextBlock Text="Source Files" Style="{StaticResource SmallMutedStyle}" FontWeight="SemiBold" />
+                <TextBlock Text="Imported Files & Data" Style="{StaticResource PageHeadingStyle}" />
               </StackPanel>
             </Grid>
 
@@ -286,13 +281,13 @@ $Xaml = @"
               </Grid.ColumnDefinitions>
               <Border Grid.Column="0" Style="{StaticResource PanelBorderStyle}">
                 <StackPanel>
-                  <TextBlock Text="Import source" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
+                  <TextBlock Text="Files" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
                   <Grid Margin="0,12,0,14">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="180" />
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Source group" VerticalAlignment="Center" Foreground="#667287" FontWeight="SemiBold" />
+                    <TextBlock Text="Source Type" VerticalAlignment="Center" Foreground="#667287" FontWeight="SemiBold" />
                     <ComboBox x:Name="SourceTypeCombo" Grid.Column="1" Height="34" SelectedIndex="0">
                       <ComboBoxItem Content="GIS / mapping" />
                       <ComboBoxItem Content="Electrical model" />
@@ -305,18 +300,17 @@ $Xaml = @"
                   </Grid>
                   <Border Background="#F7F9FC" BorderBrush="#B7C5D9" BorderThickness="1" CornerRadius="8" Padding="24" MinHeight="160">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                      <TextBlock Text="Stage imports without processing" FontWeight="SemiBold" Foreground="#132033" TextAlignment="Center" />
-                      <TextBlock Text="Files and folders are recorded with source metadata only. Parsers, normalisation and optimisation are intentionally empty for this prototype." Style="{StaticResource SmallMutedStyle}" TextAlignment="Center" Margin="0,8,0,0" />
+                      <TextBlock Text="No imported files." Style="{StaticResource SmallMutedStyle}" TextAlignment="Center" Margin="0,8,0,0" />
                     </StackPanel>
                   </Border>
-                  <TextBlock Text="Supported file picker patterns include CSV, XLSX, JSON, GeoJSON, SHP packages, GDB folders, GPKG, KML/KMZ, TAB/MIF, DXF, DXL, DSS, GLM, XML/CIM, RAW, OLR, COMTRADE CFG/DAT and platform export archives." Style="{StaticResource SmallMutedStyle}" Margin="0,12,0,0" />
+                  <TextBlock Text="Supported file types include CSV, XLSX, JSON, GeoJSON, SHP packages, GDB folders, GPKG, KML/KMZ, TAB/MIF, DXF, DXL, DSS, GLM, XML/CIM, RAW, OLR, COMTRADE CFG/DAT and platform export archives." Style="{StaticResource SmallMutedStyle}" Margin="0,12,0,0" />
                 </StackPanel>
               </Border>
 
               <Border Grid.Column="1" Style="{StaticResource PanelBorderStyle}">
                 <StackPanel>
-                  <TextBlock Text="Import adapter plan" FontSize="16" FontWeight="SemiBold" Foreground="#132033" Margin="0,0,0,8" />
-                  <TextBlock Text="The app is set up to accept common electrical engineering, GIS, protection, SCADA, outage and asset-management exports. Current status is metadata staging only." Style="{StaticResource SmallMutedStyle}" Margin="0,0,0,12" />
+                  <TextBlock Text="Importable file types" FontSize="16" FontWeight="SemiBold" Foreground="#132033" Margin="0,0,0,8" />
+                  <TextBlock Text="The app is set up to accept common electrical engineering, GIS, protection, SCADA, outage and asset-management exports." Style="{StaticResource SmallMutedStyle}" Margin="0,0,0,12" />
                   <DataGrid x:Name="AdapterSummaryGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" IsReadOnly="True" MinHeight="260">
                     <DataGrid.Columns>
                       <DataGridTextColumn Header="Platform" Binding="{Binding platform}" Width="*" />
@@ -335,7 +329,7 @@ $Xaml = @"
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                   </Grid.ColumnDefinitions>
-                  <TextBlock Text="Staged imports" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
+                  <TextBlock Text="Imported Files" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
                   <Button x:Name="ExportImportManifestButton" Grid.Column="1" Content="Export Manifest" Style="{StaticResource SecondaryButtonStyle}" IsEnabled="False" />
                 </Grid>
                 <DataGrid x:Name="ImportsGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" IsReadOnly="True" MinHeight="230">
@@ -373,7 +367,7 @@ $Xaml = @"
               <Border Style="{StaticResource PanelBorderStyle}"><StackPanel><TextBlock Text="4. Validation handoff" FontWeight="SemiBold" /><TextBlock Text="Connectivity, missing attributes and feasibility checks will publish issues." Style="{StaticResource SmallMutedStyle}" Margin="0,8,0,0" /></StackPanel></Border>
             </UniformGrid>
             <Border Style="{StaticResource PanelBorderStyle}">
-              <TextBlock Text="Processing is intentionally not implemented yet. The desktop app exposes the queue, states and import metadata so parser services can be attached later." TextWrapping="Wrap" Foreground="#667287" />
+              <TextBlock Text="Processing is not implemented yet." TextWrapping="Wrap" Foreground="#667287" />
             </Border>
           </StackPanel>
         </ScrollViewer>
@@ -522,13 +516,13 @@ $Xaml = @"
         <StackPanel>
           <Image x:Name="LoginLogo" Width="82" Height="82" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,12" />
           <TextBlock Text="Sign in to ROA" Foreground="#132033" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" />
-          <TextBlock Text="Enter a registered local prototype account. Project files are hidden until the account is accepted." Foreground="#667287" TextWrapping="Wrap" TextAlignment="Center" Margin="0,8,0,20" />
+          <TextBlock Text="Enter a registered account name." Foreground="#667287" TextWrapping="Wrap" TextAlignment="Center" Margin="0,8,0,20" />
 
           <TextBlock Text="User name" Foreground="#667287" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6" />
           <TextBox x:Name="SignInNameBox" Height="36" Text="Jack Satherley" Margin="0,0,0,14" />
 
           <Button x:Name="SignInButton" Content="Sign In" Style="{StaticResource PrimaryButtonStyle}" Height="40" />
-          <TextBlock Text="Prototype account: Jack Satherley. This is local access control only; real authentication can be added later." Foreground="#667287" TextWrapping="Wrap" TextAlignment="Center" FontSize="12" Margin="0,14,0,0" />
+          <TextBlock Text="Prototype account: Jack Satherley." Foreground="#667287" TextWrapping="Wrap" TextAlignment="Center" FontSize="12" Margin="0,14,0,0" />
         </StackPanel>
       </Border>
     </Grid>
