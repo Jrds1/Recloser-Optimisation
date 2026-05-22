@@ -51,12 +51,12 @@ $shell = New-Object -ComObject WScript.Shell
 $shortcut = $shell.CreateShortcut($ShortcutPath)
 $shortcut.TargetPath = $target
 $shortcut.WorkingDirectory = $InstallRoot
-$shortcut.Description = "Launch the Recloser Optimisation desktop prototype"
+$shortcut.Description = "Launch the Recloser Optimisation Prototype"
 $shortcut.IconLocation = $icon
 $shortcut.Save()
 
 Write-Host ""
-Write-Host "Recloser Optimisation installed for this Windows user." -ForegroundColor Green
+Write-Host "Recloser Optimisation installed." -ForegroundColor Green
 Write-Host "Installed to: $InstallRoot"
 Write-Host "Desktop shortcut: $ShortcutPath"
 Write-Host ""
