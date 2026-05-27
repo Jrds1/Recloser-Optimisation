@@ -16,12 +16,13 @@ $Xaml = @"
 <Window
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:lvc="http://schemas.livecharts.com/2.0/wpf"
   Title="Recloser Optimisation"
   Width="1500"
   Height="900"
   MinWidth="1180"
   MinHeight="720"
-  WindowStartupLocation="CenterOwner"
+  WindowStartupLocation="CenterScreen"
   Background="#F7F9FC">
   <Window.Resources>
     <Style x:Key="NavButtonStyle" TargetType="Button">
@@ -100,11 +101,10 @@ $Xaml = @"
           </Border>
 
           <Button x:Name="NavDashboard" Content="Dashboard" Tag="Dashboard" Style="{StaticResource NavButtonStyle}" />
-          <Button x:Name="NavStorage" Content="File Storage" Tag="Storage" Style="{StaticResource NavButtonStyle}" />
+          <Button x:Name="NavStorage" Content="Storage" Tag="Storage" Style="{StaticResource NavButtonStyle}" />
           <Button x:Name="NavProcessing" Content="Processing" Tag="Processing" Style="{StaticResource NavButtonStyle}" />
           <Button x:Name="NavModel" Content="Model Building" Tag="Model" Style="{StaticResource NavButtonStyle}" />
-          <Button x:Name="NavMap" Content="Topology Map" Tag="Map" Style="{StaticResource NavButtonStyle}" />
-          <Button x:Name="NavExplorer" Content="Model Explorer" Tag="Explorer" Style="{StaticResource NavButtonStyle}" />
+          <Button x:Name="NavMap" Content="Model Explorer" Tag="Map" Style="{StaticResource NavButtonStyle}" />
           <Button x:Name="NavValidation" Content="Validation" Tag="Validation" Style="{StaticResource NavButtonStyle}" />
           <Button x:Name="NavAnalysis" Content="Analysis" Tag="Analysis" Style="{StaticResource NavButtonStyle}" />
           <Button x:Name="NavOutages" Content="Outages" Tag="Outages" Style="{StaticResource NavButtonStyle}" />
@@ -213,7 +213,7 @@ $Xaml = @"
                   <Border Background="#F7F9FC" BorderBrush="#C8D3E3" BorderThickness="1" CornerRadius="8" Padding="22" Margin="0,14,0,0">
                     <StackPanel HorizontalAlignment="Center">
                       <TextBlock Text="Ready for source data" FontWeight="SemiBold" Foreground="#132033" TextAlignment="Center" />
-                      <TextBlock Text="Import utility exports first." Style="{StaticResource SmallMutedStyle}" TextAlignment="Center" Margin="0,6,0,0" />
+                      <TextBlock Text="Import utility exports first. Processing, validation and optimisation are reserved for the next build." Style="{StaticResource SmallMutedStyle}" TextAlignment="Center" Margin="0,6,0,0" />
                     </StackPanel>
                   </Border>
                 </StackPanel>
@@ -269,8 +269,13 @@ $Xaml = @"
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
               <StackPanel>
-                <TextBlock Text="Source Files" Style="{StaticResource SmallMutedStyle}" FontWeight="SemiBold" />
-                <TextBlock Text="Imported Files & Data" Style="{StaticResource PageHeadingStyle}" />
+                <TextBlock Text="File Storage" Style="{StaticResource SmallMutedStyle}" FontWeight="SemiBold" />
+                <TextBlock Text="Imported utility, electrical modelling and GIS exports" Style="{StaticResource PageHeadingStyle}" />
+              </StackPanel>
+              <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button x:Name="ChooseFilesButton" Content="Import File" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" IsEnabled="False" />
+                <Button x:Name="ChooseFolderButton" Content="Import Folder" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0" IsEnabled="False" />
+                <Button x:Name="ClearImportsButton" Content="Clear Staged" Style="{StaticResource SecondaryButtonStyle}" IsEnabled="False" />
               </StackPanel>
             </Grid>
 
@@ -281,13 +286,13 @@ $Xaml = @"
               </Grid.ColumnDefinitions>
               <Border Grid.Column="0" Style="{StaticResource PanelBorderStyle}">
                 <StackPanel>
-                  <TextBlock Text="Files" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
+                  <TextBlock Text="Imported" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
                   <Grid Margin="0,12,0,14">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="180" />
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Source Type" VerticalAlignment="Center" Foreground="#667287" FontWeight="SemiBold" />
+                    <TextBlock Text="File Contents" VerticalAlignment="Center" Foreground="#667287" FontWeight="SemiBold" />
                     <ComboBox x:Name="SourceTypeCombo" Grid.Column="1" Height="34" SelectedIndex="0">
                       <ComboBoxItem Content="GIS / mapping" />
                       <ComboBoxItem Content="Electrical model" />
@@ -300,7 +305,7 @@ $Xaml = @"
                   </Grid>
                   <Border Background="#F7F9FC" BorderBrush="#B7C5D9" BorderThickness="1" CornerRadius="8" Padding="24" MinHeight="160">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                      <TextBlock Text="No imported files." Style="{StaticResource SmallMutedStyle}" TextAlignment="Center" Margin="0,8,0,0" />
+                      <TextBlock Text="No files to show" FontWeight="SemiBold" Foreground="#132033" TextAlignment="Center" />
                     </StackPanel>
                   </Border>
                   <TextBlock Text="Supported file types include CSV, XLSX, JSON, GeoJSON, SHP packages, GDB folders, GPKG, KML/KMZ, TAB/MIF, DXF, DXL, DSS, GLM, XML/CIM, RAW, OLR, COMTRADE CFG/DAT and platform export archives." Style="{StaticResource SmallMutedStyle}" Margin="0,12,0,0" />
@@ -309,8 +314,9 @@ $Xaml = @"
 
               <Border Grid.Column="1" Style="{StaticResource PanelBorderStyle}">
                 <StackPanel>
-                  <TextBlock Text="Importable file types" FontSize="16" FontWeight="SemiBold" Foreground="#132033" Margin="0,0,0,8" />
-                  <TextBlock Text="The app is set up to accept common electrical engineering, GIS, protection, SCADA, outage and asset-management exports." Style="{StaticResource SmallMutedStyle}" Margin="0,0,0,12" />
+                  <TextBlock Text="Import Adapter Plan" FontSize="16" FontWeight="SemiBold" Foreground="#132033" Margin="0,0,0,8" />
+                  <TextBlock Text="ROA is designed to accept common engineering program exports. If the file type is unrecognized, an adapter plan can be created with the following template" Style="{StaticResource SmallMutedStyle}" Margin="0,0,0,12" />
+                  
                   <DataGrid x:Name="AdapterSummaryGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" IsReadOnly="True" MinHeight="260">
                     <DataGrid.Columns>
                       <DataGridTextColumn Header="Platform" Binding="{Binding platform}" Width="*" />
@@ -329,8 +335,8 @@ $Xaml = @"
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                   </Grid.ColumnDefinitions>
-                  <TextBlock Text="Imported Files" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
-                  <Button x:Name="ExportImportManifestButton" Grid.Column="1" Content="Export Manifest" Style="{StaticResource SecondaryButtonStyle}" IsEnabled="False" />
+                  <TextBlock Text="File History" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
+                  <Button x:Name="ExportFileHistoryButton" Grid.Column="1" Content="Export File History" Style="{StaticResource SecondaryButtonStyle}" IsEnabled="False" />
                 </Grid>
                 <DataGrid x:Name="ImportsGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" IsReadOnly="True" MinHeight="230">
                   <DataGrid.Columns>
@@ -367,7 +373,7 @@ $Xaml = @"
               <Border Style="{StaticResource PanelBorderStyle}"><StackPanel><TextBlock Text="4. Validation handoff" FontWeight="SemiBold" /><TextBlock Text="Connectivity, missing attributes and feasibility checks will publish issues." Style="{StaticResource SmallMutedStyle}" Margin="0,8,0,0" /></StackPanel></Border>
             </UniformGrid>
             <Border Style="{StaticResource PanelBorderStyle}">
-              <TextBlock Text="Processing is not implemented yet." TextWrapping="Wrap" Foreground="#667287" />
+              <TextBlock Text="Processing is  not implemented yet. " TextWrapping="Wrap" Foreground="#667287" />
             </Border>
           </StackPanel>
         </ScrollViewer>
@@ -393,12 +399,12 @@ $Xaml = @"
               <Border Grid.Column="0" Style="{StaticResource PanelBorderStyle}">
                 <StackPanel>
                   <TextBlock Text="Model versions" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
-                  <TextBlock Text="No model versions. Imported data will eventually produce versioned feeder snapshots." Style="{StaticResource SmallMutedStyle}" Margin="0,12,0,0" />
+                  <TextBlock Text="No model versions." Style="{StaticResource SmallMutedStyle}" Margin="0,12,0,0" />
                 </StackPanel>
               </Border>
               <Border Grid.Column="1" Style="{StaticResource PanelBorderStyle}">
                 <StackPanel>
-                  <TextBlock Text="Target schema" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
+                  <TextBlock Text="Data Correction Scheme" FontSize="16" FontWeight="SemiBold" Foreground="#132033" />
                   <TextBlock Text="nodes, line_segments, protection_devices, customers, outage_events, validation_issues" Style="{StaticResource SmallMutedStyle}" Margin="0,12,0,0" />
                 </StackPanel>
               </Border>
@@ -461,12 +467,53 @@ $Xaml = @"
           </Border>
         </Grid>
 
-        <ScrollViewer x:Name="ExplorerPage" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
-          <StackPanel Margin="22"><TextBlock Text="Asset search" Style="{StaticResource SmallMutedStyle}" FontWeight="SemiBold" /><TextBlock Text="Model explorer" Style="{StaticResource PageHeadingStyle}" Margin="0,0,0,16" /><Border Style="{StaticResource PanelBorderStyle}"><TextBlock Text="No searchable model yet. Once a graph model exists, this page can browse feeders, spans, transformers, devices and customer groupings." TextWrapping="Wrap" Foreground="#667287" /></Border></StackPanel>
-        </ScrollViewer>
-
         <ScrollViewer x:Name="ValidationPage" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
-          <StackPanel Margin="22"><TextBlock Text="Quality gates" Style="{StaticResource SmallMutedStyle}" FontWeight="SemiBold" /><TextBlock Text="Validation" Style="{StaticResource PageHeadingStyle}" Margin="0,0,0,16" /><UniformGrid Columns="4"><Border Style="{StaticResource PanelBorderStyle}"><StackPanel><TextBlock Text="Connectivity" Style="{StaticResource MetricTitleStyle}" /><TextBlock Text="-" FontSize="28" FontWeight="SemiBold" /></StackPanel></Border><Border Style="{StaticResource PanelBorderStyle}"><StackPanel><TextBlock Text="Attribute completeness" Style="{StaticResource MetricTitleStyle}" /><TextBlock Text="-" FontSize="28" FontWeight="SemiBold" /></StackPanel></Border><Border Style="{StaticResource PanelBorderStyle}"><StackPanel><TextBlock Text="Spatial consistency" Style="{StaticResource MetricTitleStyle}" /><TextBlock Text="-" FontSize="28" FontWeight="SemiBold" /></StackPanel></Border><Border Style="{StaticResource PanelBorderStyle}"><StackPanel><TextBlock Text="Placement feasibility" Style="{StaticResource MetricTitleStyle}" /><TextBlock Text="-" FontSize="28" FontWeight="SemiBold" /></StackPanel></Border></UniformGrid><Border Style="{StaticResource PanelBorderStyle}"><TextBlock Text="Validation rules are placeholders. Future routines will flag disconnected spans, missing device attributes, coordinate problems and inferred data." TextWrapping="Wrap" Foreground="#667287" /></Border></StackPanel>
+          <StackPanel Margin="22">
+            <TextBlock Text="Quality gates" Style="{StaticResource SmallMutedStyle}" FontWeight="SemiBold" />
+            <TextBlock Text="Validation" Style="{StaticResource PageHeadingStyle}" Margin="0,0,0,16" />
+            <UniformGrid Columns="4">
+              <Border Style="{StaticResource PanelBorderStyle}">
+                <StackPanel>
+                  <TextBlock Text="Connectivity" Style="{StaticResource MetricTitleStyle}" />
+                  <TextBlock Text="-" FontSize="28" FontWeight="SemiBold" />
+                </StackPanel>
+              </Border>
+              <Border Style="{StaticResource PanelBorderStyle}">
+                <StackPanel>
+                  <TextBlock Text="Attribute completeness" Style="{StaticResource MetricTitleStyle}" />
+                  <TextBlock Text="-" FontSize="28" FontWeight="SemiBold" />
+                </StackPanel>
+              </Border>
+              <Border Style="{StaticResource PanelBorderStyle}">
+                <StackPanel>
+                  <TextBlock Text="Spatial consistency" Style="{StaticResource MetricTitleStyle}" />
+                  <TextBlock Text="-" FontSize="28" FontWeight="SemiBold" />
+                </StackPanel>
+              </Border>
+              <Border Style="{StaticResource PanelBorderStyle}">
+                <StackPanel>
+                  <TextBlock Text="Placement feasibility" Style="{StaticResource MetricTitleStyle}" />
+                  <TextBlock Text="-" FontSize="28" FontWeight="SemiBold" />
+                </StackPanel>
+              </Border>
+            </UniformGrid>
+            <Border Style="{StaticResource PanelBorderStyle}" Margin="0,16,0,0">
+              <StackPanel>
+                <TextBlock Text="Validation Radar"
+                          FontSize="16"
+                          FontWeight="SemiBold"
+                          Margin="0,0,0,10"/>
+                <Grid>
+                  <Canvas x:Name="RadarCanvas" Height="320"/>
+                </Grid>
+              </StackPanel>
+            </Border>
+            <Border Style="{StaticResource PanelBorderStyle}" Margin="0,16,0,0">
+              <TextBlock Text="Validation rules are placeholders. Future routines will flag disconnected spans, missing device attributes, coordinate problems and inferred data."
+                        TextWrapping="Wrap"
+                        Foreground="#667287" />
+            </Border>
+          </StackPanel>
         </ScrollViewer>
 
         <ScrollViewer x:Name="AnalysisPage" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
@@ -516,13 +563,13 @@ $Xaml = @"
         <StackPanel>
           <Image x:Name="LoginLogo" Width="82" Height="82" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,12" />
           <TextBlock Text="Sign in to ROA" Foreground="#132033" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" />
-          <TextBlock Text="Enter a registered account name." Foreground="#667287" TextWrapping="Wrap" TextAlignment="Center" Margin="0,8,0,20" />
+          <TextBlock Text="Enter a registered local prototype account. Project files are hidden until the account is accepted." Foreground="#667287" TextWrapping="Wrap" TextAlignment="Center" Margin="0,8,0,20" />
 
           <TextBlock Text="User name" Foreground="#667287" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6" />
           <TextBox x:Name="SignInNameBox" Height="36" Text="Jack Satherley" Margin="0,0,0,14" />
 
           <Button x:Name="SignInButton" Content="Sign In" Style="{StaticResource PrimaryButtonStyle}" Height="40" />
-          <TextBlock Text="Prototype account: Jack Satherley." Foreground="#667287" TextWrapping="Wrap" TextAlignment="Center" FontSize="12" Margin="0,14,0,0" />
+          <TextBlock Text="Prototype account: Jack Satherley. This is local access control only; real authentication can be added later." Foreground="#667287" TextWrapping="Wrap" TextAlignment="Center" FontSize="12" Margin="0,14,0,0" />
         </StackPanel>
       </Border>
     </Grid>
@@ -547,7 +594,7 @@ $ExportTemplateButton = Get-Control "ExportTemplateButton"
 $ChooseFilesButton = Get-Control "ChooseFilesButton"
 $ChooseFolderButton = Get-Control "ChooseFolderButton"
 $ClearImportsButton = Get-Control "ClearImportsButton"
-$ExportImportManifestButton = Get-Control "ExportImportManifestButton"
+$ExportFileHistoryButton = Get-Control "ExportFileHistoryButton"
 $ImportsGrid = Get-Control "ImportsGrid"
 $DashboardImportsGrid = Get-Control "DashboardImportsGrid"
 $AdapterSummaryGrid = Get-Control "AdapterSummaryGrid"
@@ -556,6 +603,9 @@ $SourceTypeCombo = Get-Control "SourceTypeCombo"
 $MapHost = Get-Control "MapHost"
 $TileCanvas = Get-Control "TileCanvas"
 $MapReadout = Get-Control "MapReadout"
+$RadarHost = Get-Control "RadarHost"
+$RadarCanvas = Get-Control "RadarCanvas"
+$RadarReadout = Get-Control "RadarReadout"
 $MapLayerCombo = Get-Control "MapLayerCombo"
 $OverlayToggle = Get-Control "OverlayToggle"
 $MapEmptyBadge = Get-Control "MapEmptyBadge"
@@ -592,7 +642,7 @@ $script:MapState = @{
 $script:CurrentUserName = "Not signed in"
 $script:CurrentProjectName = ""
 
-foreach ($name in @("Dashboard","Ingestion","Processing","Model","Map","Explorer","Validation","Analysis","Outages","Reports","Settings")) {
+foreach ($name in @("Dashboard","Storage","Processing","Model","Map","Validation","Analysis","Outages","Reports","Settings")) {
   $script:Pages[$name] = Get-Control "$($name)Page"
   $button = Get-Control "Nav$name"
   if ($button) {
@@ -636,11 +686,10 @@ function Show-Page {
 
   $titles = @{
     Dashboard = @("Prototype","Dashboard")
-    Ingestion = @("Source staging","Ingestion")
+    Storage = @("File Storage","Storage")
     Processing = @("Pipeline","Processing")
     Model = @("Internal network model","Model Building")
-    Map = @("Geospatial workspace","Topology Map")
-    Explorer = @("Asset search","Model Explorer")
+    Map = @("Geospatial workspace","Model Explorer")
     Validation = @("Quality gates","Validation")
     Analysis = @("Reliability studies","Analysis")
     Outages = @("Historical performance","Outages")
@@ -655,6 +704,8 @@ function Show-Page {
   if ($Name -eq "Map") {
     $Window.Dispatcher.BeginInvoke([Action]{ Render-Map }) | Out-Null
   }
+
+
 }
 
 function Get-AdapterCatalogue {
@@ -959,7 +1010,7 @@ function Set-AuthenticatedControls {
     $ChooseFilesButton,
     $ChooseFolderButton,
     $ClearImportsButton,
-    $ExportImportManifestButton
+    $ExportFileHistoryButton
   )) {
     if ($control) {
       $control.IsEnabled = $Enabled
@@ -1269,7 +1320,7 @@ function Get-ImportManifest {
     signedInUser = $script:CurrentUserName
     generatedAt = (Get-Date).ToUniversalTime().ToString("o")
     scope = [pscustomobject]@{
-      ingestion = "metadata staging only"
+      Storage = "metadata staging only"
       processing = "not implemented"
       validation = "not implemented"
       optimisation = "not implemented"
@@ -1442,7 +1493,61 @@ foreach ($button in $script:NavButtons) {
   })
 }
 
-(Get-Control "TopImportButton").Add_Click({ Show-Page "Ingestion"; Choose-ImportFiles })
+function Render-Radar {
+    if (-not $RadarCanvas -or -not $RadarHost) { return }
+    if ($RadarHost.ActualWidth -lt 10 -or $RadarHost.ActualHeight -lt 10) { return }
+    $RadarCanvas.Children.Clear()
+
+    $values = @(0.82, 0.76, 0.88, 0.69, 0.73, 0.80)
+    $labels = @("Connectivity","Completeness","Spatial","Feasibility","Size","Verify")
+    $centerX = $RadarCanvas.ActualWidth / 2.0
+    $centerY = $RadarCanvas.ActualHeight / 2.0
+    $radius = [math]::Min($centerX, $centerY) * 0.7
+    $count = $values.Length
+    $points = @()
+
+    for ($i = 0; $i -lt $count; $i++) {
+      $angle = (2 * [math]::PI * $i / $count) - ([math]::PI / 2)
+      $value = $values[$i]
+      $r = $radius * $value
+      $x = $centerX + ($r * [math]::Cos($angle))
+      $y = $centerY + ($r * [math]::Sin($angle))
+      $points += "$x,$y"
+      # Axis line
+      $axisX = $centerX + ($radius * [math]::Cos($angle))
+      $axisY = $centerY + ($radius * [math]::Sin($angle))
+      $line = New-Object Windows.Shapes.Line
+      $line.X1 = $centerX
+      $line.Y1 = $centerY
+      $line.X2 = $axisX
+      $line.Y2 = $axisY
+      $line.Stroke = "Gray"
+      $line.StrokeThickness = 1
+      $RadarCanvas.Children.Add($line) | Out-Null
+      # Label
+      $text = New-Object Windows.Controls.TextBlock
+      $text.Text = $labels[$i]
+      [Windows.Controls.Canvas]::SetLeft($text, $axisX)
+      [Windows.Controls.Canvas]::SetTop($text, $axisY)
+      $RadarCanvas.Children.Add($text) | Out-Null
+    }
+    # Radar polygon
+    $polygon = New-Object Windows.Shapes.Polygon
+    $polygon.Points = [Windows.Media.PointCollection]::Parse(($points -join " "))
+    $polygon.Fill = "#883399FF"
+    $polygon.Stroke = "#FF0066CC"
+    $polygon.StrokeThickness = 2
+    $RadarCanvas.Children.Add($polygon) | Out-Null
+  }
+
+  function Update-RadarReadout {
+    $values = @(0.82, 0.76, 0.88, 0.69, 0.73, 0.80)
+    $RadarReadout.Text = "Connectivity: $($values[0]), Completeness: $($values[1]), Spatial: $($values[2]),
+    Feasibility: $($values[3]), Size: $($values[4]), Verification: $($values[5])" -f $script:MapState.CenterLat, $script:MapState.CenterLng, $script:MapState.Zoom
+  }
+
+
+(Get-Control "TopImportButton").Add_Click({ Show-Page "Storage"; Choose-ImportFiles })
 (Get-Control "ChooseFilesButton").Add_Click({ Choose-ImportFiles })
 (Get-Control "ChooseFolderButton").Add_Click({ Choose-ImportFolder })
 (Get-Control "ClearImportsButton").Add_Click({
@@ -1451,10 +1556,10 @@ foreach ($button in $script:NavButtons) {
   }
   $script:Imports.Clear()
   Save-CurrentProjectImports
-  Set-Status "Staged imports cleared"
+  Set-Status "File History cleared"
 })
 (Get-Control "ExportManifestButton").Add_Click({ Export-Manifest })
-(Get-Control "ExportImportManifestButton").Add_Click({ Export-Manifest })
+(Get-Control "ExportFileHistoryButton").Add_Click({ Export-Manifest })
 (Get-Control "ExportTemplateButton").Add_Click({ Export-Template })
 (Get-Control "ExportGeoJsonButton").Add_Click({ Export-GeoJson })
 (Get-Control "CenterMapButton").Add_Click({ Center-Map })
@@ -1547,6 +1652,8 @@ $MapHost.Add_MouseMove({
   $script:MapState.LastPoint = $point
   Render-Map
 })
+
+
 
 Load-Adapters
 Load-Reports
